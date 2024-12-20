@@ -14,11 +14,14 @@ const ProductCard = ({ product, isAdmin }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const editProduct = async () => {
-    return await axios.post("http://localhost:5000/api/products/add", {
-      name,
-      price,
-      image,
-    });
+    return await axios.put(
+      `http://localhost:5000/api/products/edit/${product._id}`,
+      {
+        name,
+        price,
+        image,
+      }
+    );
   };
 
   const deleteProduct = async () => {
@@ -75,14 +78,17 @@ const ProductCard = ({ product, isAdmin }) => {
         <input
           placeholder="Product Name"
           onChange={(e) => setName(e.target.value)}
+          value={name}
         />
         <input
           placeholder="Product Price"
           onChange={(e) => setPrice(e.target.value)}
+          value={price}
         />
         <input
           placeholder="Image Link"
           onChange={(e) => setImage(e.target.value)}
+          value={image}
         />
         <button onClick={updateHandler}>Update</button>
       </Modal>

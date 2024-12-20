@@ -7,6 +7,7 @@ import ProductPage from "./pages/ProductPage";
 import Navbar from "./components/Navbar";
 import { v4 as uuidv4 } from "uuid";
 import CartPage from "./pages/CartPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   useEffect(() => {
@@ -23,9 +24,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<DisplayPage />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin" element={<ProtectedRoute element={AdminPage} />} />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </Router>
   );

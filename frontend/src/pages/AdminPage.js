@@ -73,11 +73,11 @@ function AdminPage() {
             key={index}
           >
             <p>{order.buyerName}</p>
-            <p>
-              {order.productList.map((item) => (
-                <p>{item}</p>
+            <div>
+              {order.productList.map((item, index) => (
+                <p key={index}>{item}</p>
               ))}
-            </p>
+            </div>
             <p>total: ${order.total}</p>
             <p>Date: ${order.date}</p>
           </div>

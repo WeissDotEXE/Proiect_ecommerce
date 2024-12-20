@@ -1,10 +1,11 @@
 import pkg from "bcryptjs";
-import sign from "jsonwebtoken";
+import pkgJWT from "jsonwebtoken"; // Import jsonwebtoken correctly
 import User from "../models/User.js";
-
 import { Router } from "express";
+
 const router = Router();
-const { hash, compare } = pkg;
+const { hash, compare } = pkg; // Extract functions from bcryptjs
+const { sign } = pkgJWT; // Extract `sign` from jsonwebtoken
 
 // User Registration
 router.post("/register", async (req, res) => {
@@ -24,17 +25,27 @@ router.post("/register", async (req, res) => {
 // User Login
 router.post("/login", async (req, res) => {
   try {
+    console.log("Request Body:", req.body); // Debug log
+
     const user = await User.findOne({ username: req.body.username });
-    if (!user) return res.status(400).json("Invalid username!");
+    if (!user) {
+      console.log("Invalid username!"); // Debug log
+      return res.status(400).json("Invalid username!");
+    }
 
     const isMatch = await compare(req.body.password, user.password);
-    if (!isMatch) return res.status(400).json("Invalid password!");
+    if (!isMatch) {
+      console.log("Invalid password!"); // Debug log
+      return res.status(400).json("Invalid password!");
+    }
 
     const token = sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+    console.log("Generated Token:", token); // Debug log
     res.json({ token });
   } catch (err) {
+    console.error("Error:", err); // Debug log
     res.status(500).json(err);
   }
 });

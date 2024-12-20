@@ -30,7 +30,7 @@ const CartPage = () => {
 
   const calculateTotal = () => {
     for (let i = 0; i < productList.length; i++) {
-      setTotal((prev) => (prev += productList[i].price));
+      setTotal(total + productList[i].price);
     }
   };
 
@@ -91,7 +91,6 @@ const CartPage = () => {
       >
         {productList.length > 0 && (
           <div>
-            <h2>Total ${total}</h2>
             <h2>Billing info</h2>
             <form
               onSubmit={submitOrderHandler}
