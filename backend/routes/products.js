@@ -11,6 +11,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+//fetch one product
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.json(product);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Add a product
 router.post("/add", async (req, res) => {
   try {
@@ -19,6 +29,27 @@ router.post("/add", async (req, res) => {
     res.status(201).json("Product added successfully!");
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+//edit product
+router.put("/edit/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" }); // Handle case where product does not exist
+    }
+
+    res.status(200).json({
+      message: "Product updated successfully!",
+      product: updatedProduct,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

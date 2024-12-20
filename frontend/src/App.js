@@ -4,10 +4,12 @@ import AuthPage from "./pages/AuthPage";
 import DisplayPage from "./pages/DisplayPage";
 import AdminPage from "./pages/AdminPage";
 import ProductPage from "./pages/ProductPage";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<DisplayPage />} />
         <Route path="/admin" element={<AdminPage />} />

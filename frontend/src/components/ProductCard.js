@@ -51,10 +51,7 @@ const ProductCard = ({ product, isAdmin }) => {
   }, [product]);
 
   return (
-    <div
-      style={styles.card}
-      onClick={() => navigate(`/product/${product._id}`)}
-    >
+    <div style={styles.card}>
       <img src={product.image} alt={product.name} style={styles.image} />
       <div style={styles.info}>
         <h3 style={styles.title}>{product.name}</h3>
@@ -66,6 +63,12 @@ const ProductCard = ({ product, isAdmin }) => {
           <button onClick={() => setShowDeleteModal(true)}>Delete</button>
         </div>
       )}
+      <button
+        style={{ margin: "10px 0px" }}
+        onClick={() => navigate(`/product/${product._id}`)}
+      >
+        View details
+      </button>
       <Modal isOpen={showEditModal}>
         <h2>Edit {product.name}</h2>
         <button onClick={() => setShowEditModal(false)}>close</button>
@@ -103,7 +106,6 @@ const styles = {
     width: "250px",
     textAlign: "center",
     margin: "10px",
-    cursor: "pointer",
   },
   image: {
     width: "100%",
