@@ -14,7 +14,7 @@ function AuthPage() {
         password,
       });
       localStorage.setItem("token", res.data.token);
-      navigate("/products");
+      navigate("/admin");
     } catch (err) {
       console.error("Error:", err);
     }

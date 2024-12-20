@@ -6,7 +6,25 @@ const ProductPage = () => {
   const { id } = useParams();
 
   const [product, setProduct] = useState({});
-  const [quantity, setQuantity] = useState(1);
+  console.log(product);
+
+  const buyHandler = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/cart/add", {
+        userId: localStorage.getItem("random_user_id"),
+        product: {
+          name: product.name,
+          price: product.price,
+          image: product.image,
+        },
+      });
+      if (response.status === 200) {
+        alert(`${product.name} added to cart`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -43,14 +61,9 @@ const ProductPage = () => {
         <div>
           <h2>{product.name}</h2>
           <h2>${product.price}</h2>
-          <label>Quantity</label>
-          <input
-            placeholder="quantity"
-            type="number"
-            onChange={(e) => setQuantity(e.target.value)}
-            value={quantity}
-          />
-          <button style={{ width: "100%" }}>Buy</button>
+          <button style={{ width: "100%" }} onClick={buyHandler}>
+            Buy
+          </button>
         </div>
       </div>
       <p>{product.description}</p>

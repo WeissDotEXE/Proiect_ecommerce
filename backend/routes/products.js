@@ -1,5 +1,7 @@
-const router = require("express").Router();
-const Product = require("../models/Product");
+import { Router } from "express";
+import Product from "../models/Product.js";
+
+const router = Router();
 
 // Fetch all products
 router.get("/", async (req, res) => {
@@ -63,4 +65,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

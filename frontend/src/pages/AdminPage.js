@@ -11,6 +11,7 @@ function AdminPage() {
   const [products, setProducts] = useState([]);
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [error, setError] = useState("");
+  const [orders, setOrders] = useState([]);
 
   const addProduct = async () => {
     return await axios.post("http://localhost:5000/api/products/add", {
@@ -38,6 +39,15 @@ function AdminPage() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const res = await axios.get("http://localhost:5000/api/orders");
+      setOrders(res.data);
+    };
+    fetchOrders();
+  }, []);
+  console.log(orders);
+
   return (
     <div>
       <h2>Admin Panel</h2>
@@ -46,6 +56,31 @@ function AdminPage() {
       <div style={styles.grid}>
         {products.map((p) => (
           <ProductCard key={p._id} product={p} isAdmin={true} />
+        ))}
+      </div>
+
+      <h2>Orders</h2>
+      <div>
+        {orders.map((order, index) => (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              backgroundColor: "gray",
+              margin: "10px",
+            }}
+            key={index}
+          >
+            <p>{order.buyerName}</p>
+            <p>
+              {order.productList.map((item) => (
+                <p>{item}</p>
+              ))}
+            </p>
+            <p>total: ${order.total}</p>
+            <p>Date: ${order.date}</p>
+          </div>
         ))}
       </div>
 
